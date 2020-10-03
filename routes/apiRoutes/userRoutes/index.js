@@ -1,19 +1,15 @@
-const router = require('express')
-  .Router();
+const router = require('express').Router();
+const { getAllUsers } = require('../../../controllers/userController');
 const connection = require('../../../config/connection');
+const { insertUser } = require('../../../model/userQueries');
+
 // /api/users prepended to every Route
 router.route('/')
-  .get(async (_req, res) => {
-    const query = 'SELECT * FROM users;';
-    const [rows, fields] = await connection.query(query);
-    console.log('I AM ROWS', rows);
-    console.log('I AM FIELDS', fields);
-    res.json(rows);
-  })
+  .get(getAllUsers)
   .post(async (req, res) => {
     const userInput = req.body;
-    const query = 'INSERT INTO users SET ?;';
-    const result = await connection.query(query, userInput);
+    const result = await connection.query(insertUser, userInput);
     res.json(result);
   });
+
 module.exports = router;
