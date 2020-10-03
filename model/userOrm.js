@@ -1,4 +1,8 @@
-const { findAllUsers, insertUserQuery } = require('./userQueries');
+const {
+  findAllUsers,
+  findUserByIdQuery,
+  insertUserQuery,
+} = require('./userQueries');
 const connection = require('../config/connection');
 
 const fetchUsers = async () => {
@@ -10,7 +14,16 @@ const fetchUsers = async () => {
   }
 };
 
-const inserUserToDb = async (username) => {
+const fetchUserByIdFromDb = async (userId) => {
+  try {
+    const [rows] = await connection.query(findUserByIdQuery, userId);
+    return rows[0];
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+const insertUserToDb = async (username) => {
   try {
     const [result] = await connection.query(insertUserQuery, username);
   } catch (e) {
@@ -20,5 +33,6 @@ const inserUserToDb = async (username) => {
 
 module.exports = {
   fetchUsers,
-  inserUserToDb,
+  insertUserToDb,
+  fetchUserByIdFromDb,
 };

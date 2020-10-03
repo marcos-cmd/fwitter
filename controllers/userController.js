@@ -1,4 +1,4 @@
-const { fetchUsers, insertUserToDb } = require('../model/userOrm');
+const { fetchUsers, insertUserToDb, fetchUserByIdFromDb } = require('../model/userOrm');
 
 module.exports = {
   getAllUsersApi: async (_req, res) => {
@@ -12,11 +12,11 @@ module.exports = {
   insertUserApi: async (req, res) => {
     const { username } = req.body;
     try {
-        const result = await insertUserToDb(username);
-        console.log('I am the result');
-        res.json(result);
-    } catch (error) {
-        res.status(400).json(e);
+      const result = await insertUserToDb(username);
+      const user = await fetchUserByIdFromDb(result.insertId);
+      res.json(user);
+    } catch (e) {
+      res.status(400).json(e);
     }
   },
 };
