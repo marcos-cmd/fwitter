@@ -1,6 +1,6 @@
-const router = require('express').Router();
-const { getAllUsersApi, insertUserApi } = require('../../../controllers/userController');
-
+const router = require('express')
+  .Router();
+const { getAllUsersApi, insertUserApi, getUserByIdApi } = require('../../../controllers/userController');
 // /api/users prepended to every Route
 // Separation of concern.
 // Anything that has to do with routing stays in routing
@@ -16,4 +16,6 @@ router.route('/')
   .get(getAllUsersApi)
   .post(insertUserApi);
 
+router.route('/:userId')
+  .get(getUserByIdApi);
 module.exports = router;
