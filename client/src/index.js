@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { createlogger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import App from './App';
 import rootReducer from './redux';
 
